@@ -5,30 +5,19 @@ from users.models import User as Host
 # Create your models here.
 
 
-class AbstractThings(CoreModel.TimeStamps):
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-
-    def Meta():
-        abstract = True
-
-    def __str__(self):
-        return self.name
-
-
-class RoomType(AbstractThings):
+class RoomType(CoreModel.AbstractThings):
     pass
 
 
-class Facility(AbstractThings):
+class Facility(CoreModel.AbstractThings):
     pass
 
 
-class Amenities(AbstractThings):
+class Amenities(CoreModel.AbstractThings):
     pass
 
 
-class HouseRule(AbstractThings):
+class HouseRule(CoreModel.AbstractThings):
     pass
 
 

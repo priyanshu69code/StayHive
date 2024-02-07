@@ -47,6 +47,8 @@ PROJECT_APPS = [
     "users",
     "core",
     "rooms",
+    "review",
+    "reservations",
 ]
 
 
