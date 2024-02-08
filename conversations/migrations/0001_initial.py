@@ -12,18 +12,23 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Review',
+            name='Converstions',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('review', models.CharField(max_length=1000)),
-                ('accuracy', models.IntegerField()),
-                ('communication', models.IntegerField()),
-                ('clearniness', models.IntegerField()),
-                ('location', models.IntegerField()),
-                ('check_in', models.IntegerField()),
-                ('value', models.IntegerField()),
+            ],
+            options={
+                'abstract': False,
+            },
+        ),
+        migrations.CreateModel(
+            name='Message',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('updated_at', models.DateTimeField(auto_now=True)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('text', models.TextField()),
             ],
             options={
                 'abstract': False,
