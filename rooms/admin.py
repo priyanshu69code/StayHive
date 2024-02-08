@@ -4,6 +4,16 @@ from rooms.models import Room, HouseRule, Amenities, Facility, RoomType
 
 
 class RoomAdmin(admin.ModelAdmin):
+    # Fields to show in the main view of the object
+    fieldsets = [
+        ('Basic Information', {'fields': [
+         'name', 'description', "address", 'city', 'country', "price_per_night"]}),
+        ("Spaces", {"fields": ["is_available", "beds", "bedrooms", "baths"]}),
+        ("Amenities and Services", {"fields": [
+         "room_type", "facilities", "amenities", "house_rules"]}),
+        ("Timings", {"fields": ["checkin", "checkout"]}),
+        ("Owner", {"fields": ["host"]})
+    ]
     list_display = ("name",
                     "country",
                     "city",
