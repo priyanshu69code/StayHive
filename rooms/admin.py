@@ -21,11 +21,26 @@ class RoomAdmin(admin.ModelAdmin):
                     "max_guests",
                     "is_available",
                     "beds",
-                    "host")
+                    "host",
+                    "count_amenities",
+                    "count_facilities",
+                    "count_rules")
     search_fields = ["country", "name", "host__username"]
     list_filter = ["is_available", "country", "city"]
 
     filter_horizontal = ["house_rules", "amenities", "facilities"]
+
+    def count_amenities(self, obj):
+        return obj.amenities.count()
+    count_amenities.short_description = "Number of amenities"
+
+    def count_facilities(self, obj):
+        return obj.facilities.count()
+    count_facilities.short_description = "Number of facilities"
+
+    def count_rules(self, obj):
+        return obj.house_rules.count()
+    count_rules.short_description = "Number of Rules"
 
 
 admin.site.register(Room, RoomAdmin)
