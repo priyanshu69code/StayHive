@@ -9,14 +9,19 @@ class Converstions(core_models.TimeStamps):
         "users.User", related_name="conversations")
 
     def __str__(self) -> str:
-        return str(self.created_at)
+        username = [user for user in self.participants.all()]
+        return f"Conversation between {', '.join([str(u) for u in username])}"
+
+    def count_messages(self) -> int:
+        return self.message.count()
 
 
 class Message(core_models.TimeStamps):
     text = models.TextField()
     user = models.ForeignKey(
         "users.User", on_delete=models.SET_NULL, null=True)
-    converstions = models.ForeignKey(Converstions, on_delete=models.CASCADE)
+    converstions = models.ForeignKey(
+        Converstions, on_delete=models.CASCADE, related_name="message")
 
     def __str__(self) -> str:
         return f"{self.user} says: {self.text[:50]}"

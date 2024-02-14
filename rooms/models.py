@@ -46,3 +46,23 @@ class Room(CoreModel.TimeStamps):
 
     def __str__(self):
         return self.name
+
+    def room_avg_rev(self):
+        total_review = self.review.all()
+        if len(total_review) == 0:
+            return 0  # or any default value you prefer when there are no reviews
+        else:
+            count = 0
+            for rating in total_review:
+                count += rating.averge_review()
+            return round(count / len(total_review), 2)
+
+    def save(self, *args, **kwargs):
+        self.city = self.city.capitalize()
+        super(Room, self).save(*args, **kwargs)
+
+
+class RoomPhotos(CoreModel.TimeStamps):
+    img = models.ImageField(upload_to="roomsphotos")
+    room = models.ForeignKey(
+        Room, related_name='photos', on_delete=models.CASCADE)

@@ -6,7 +6,8 @@ from django.contrib.auth.admin import UserAdmin
 
 
 class CoustomUserAdmin(UserAdmin):
-    list_display = ("username", "email", "first_name", "last_name")
+    list_display = ("username", "email", "first_name",
+                    "last_name", "superhost", "country")
     list_filter = ("language", "country", "superhost")
     fieldsets = UserAdmin.fieldsets + (
         ('Coustom Fields', {'fields': ('gender', 'birthday',

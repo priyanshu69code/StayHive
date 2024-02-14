@@ -1,4 +1,10 @@
 from django.contrib import admin
 from review.models import Review
 # Register your models here.
-admin.site.register(Review)
+
+
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ("__str__", "averge_review")
+
+
+admin.site.register(Review, ReviewAdmin)

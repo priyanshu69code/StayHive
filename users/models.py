@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     """This is Custom user model for StayHive"""
-    avatar = models.ImageField(null=True, blank=True)
+    avatar = models.ImageField(null=True, blank=True, upload_to="avatars")
     bio = models.TextField(default="", blank=True)
     gender = models.ForeignKey(
         'Gender', on_delete=models.SET_NULL, null=True, blank=True)
