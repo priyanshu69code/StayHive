@@ -9,7 +9,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser: CommandParser) -> None:
         parser.add_argument(
-            "--number", help="How many fake Users You wants to create"
+            "--number", help="How many fake Users You wants to create",default=1
         )
 
     def handle(self, *args, **options):
@@ -23,7 +23,7 @@ class Command(BaseCommand):
             "is_superuser": False,
             "gender": lambda x: random.choice(gender),
             "language": lambda x: random.choice(language),
-            "country": lambda x: random.choice(country)
+            # "country": lambda x: random.choice(country)
         })
         inserted_pks = seeder.execute()
         self.stdout.write(self.style.SUCCESS(
