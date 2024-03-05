@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("--number", type=int,
-                            help="How many fake Rooms you want to create")
+                            help="How many fake Rooms you want to create",default=1)
 
     def handle(self, *args, **options):
         number = options.get("number")
