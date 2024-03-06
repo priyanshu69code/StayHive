@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("--number", type=int,
-                            help="How many fake Rooms you want to create",default=1)
+                            help="How many fake Rooms you want to create", default=1)
 
     def handle(self, *args, **options):
         number = options.get("number")
@@ -26,7 +26,7 @@ class Command(BaseCommand):
 
         for i in range(number):
             room = Room.objects.create(
-                name=f"Room {i}",
+                name=fake.company(),
                 description=fake.paragraph(),
                 country=fake.country(),
                 city=fake.city(),

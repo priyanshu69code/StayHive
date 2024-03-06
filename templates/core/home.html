@@ -4,16 +4,16 @@
 
 {% block content %}
 
-{% for room in rooms %}
+{% for room in room_list %}
 <h4> {{room}} </h4>
 {% endfor %}
 <h3>
-    {% if rooms.has_previous %}
-    <a href="?page={{rooms.previous_page_number}}">Previous</a>
+    {% if page_obj.has_previous %}
+    <a href="?page={{page_obj.previous_page_number}}">Previous</a>
     {% endif %}
-    {{rooms.number}} of {{rooms.paginator.num_pages}} Pages
-    {% if rooms.has_next %}
-    <a href="?page={{rooms.next_page_number}}">Next</a>
+    {{page_obj.number}} of {{page_obj.paginator.num_pages}} Pages
+    {% if page_obj.has_next %}
+    <a href="?page={{page_obj.next_page_number}}">Next</a>
     {% endif %}
 </h3>
 
