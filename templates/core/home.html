@@ -5,7 +5,9 @@
 {% block content %}
 
 {% for room in room_list %}
-<h4> {{room}} </h4>
+<h4>
+    <a href="{% url 'rooms:detail' room.pk %}"> {{ room.name }}</a><br />
+</h4>
 {% endfor %}
 <h3>
     {% if page_obj.has_previous %}

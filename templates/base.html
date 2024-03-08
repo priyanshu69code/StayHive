@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}Your Website Title{% endblock %} | StayHive</title>
-    <!-- Add your CSS links here -->
-  </head>
-  <body>
-    {% block content %}
-    <!-- Your content goes here -->
-    {% endblock %}
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Your Website Title{% endblock %} | StayHive</title>
+  <!-- Add your CSS links here -->
+</head>
+
+<body>
+  <header>
+    {% include "partials/navigations.html" %}
+    {% block search-bar %}
+    <form action="{% url 'rooms:search' %}" method="get">
+      <input type="text" name="city" placeholder="Search by the City">
+    </form>
+    {% endblock search-bar %}
+  </header>
+  {% block content %}
+  <!-- Your content goes here -->
+  {% endblock %}
+</body>
+
 </html>

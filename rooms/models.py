@@ -1,5 +1,6 @@
 from django.db import models
 from django_countries.fields import CountryField
+from django.urls import reverse
 import core.models as CoreModel
 from users.models import User as Host
 # Create your models here.
@@ -46,6 +47,9 @@ class Room(CoreModel.TimeStamps):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("rooms:detail", kwargs={"pk": self.pk})
 
     def room_avg_rev(self):
         total_review = self.review.all()

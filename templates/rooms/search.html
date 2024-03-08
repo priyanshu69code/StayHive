@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %} search Page {% endblock %}
+
+{% block search-bar %}
+<form action="{% url 'rooms:search' %}" method="get">
+    <div>
+        <label for="city"> City </label>
+        <input type="text" value="{{ city }}" id="city" name="city" placeholder="Search by the City">
+    </div>
+    <br />
+    <div>
+        <label for="country"> Country </label>
+        <select name="country" id="country">
+            {% for c in countries %}
+            <option value="{{ c.code }}"> {{ c.name }} </option>
+            {% endfor %}
+        </select>
+
+    </div>
+    <div>
+        <label for="roomtype"> Type of Rooms </label>
+        <select name="roomtype" id="roomtype">
+            {% for rt in roomtypes %}
+            <option value="{{ rt.pk }}"> {{ rt.name }} </option>
+            {% endfor %}
+        </select>
+
+    </div>
+    <button type="submit"> Search </button></div>
+</form>
+{% endblock %}
+
+{% block content %}
+
+<h1>{{city}}</h1>
+
+{% endblock %}
