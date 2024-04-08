@@ -146,3 +146,10 @@ AUTH_USER_MODEL = "users.User"
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 
 MEDIA_URL = "/media/"  # We add the "/" at beggening becasue it should be abslute path
+
+# Email Configrations
+
+EMAIL_HOST = "smtp-relay.brevo.com"
+EMAIL_PORT = "587"
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""
