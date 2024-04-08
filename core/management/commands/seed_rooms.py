@@ -7,7 +7,7 @@ import random
 import os
 from django_countries.fields import CountryField
 
-  
+
 class Command(BaseCommand):
     help = "This command is to create Dummy Rooms"
 

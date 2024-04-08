@@ -8,8 +8,8 @@ django = "*"
 pillow = "*"
 django-seed = "*"
 psycopg2 = "*"
-django-countries = "*"
 setuptools = "*"
+django-countries = "*"
 
 [dev-packages]
 
