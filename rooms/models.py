@@ -39,7 +39,8 @@ class Room(CoreModel.TimeStamps):
     baths = models.IntegerField()
     checkin = models.TimeField()
     checkout = models.TimeField()
-    host = models.ForeignKey(Host, on_delete=models.CASCADE, null=True)
+    host = models.ForeignKey(Host, related_name="rooms",
+                             on_delete=models.CASCADE, null=True)
     room_type = models.ForeignKey(
         RoomType, on_delete=models.SET_NULL, null=True)
     facilities = models.ManyToManyField(Facility)
@@ -65,6 +66,10 @@ class Room(CoreModel.TimeStamps):
     def save(self, *args, **kwargs):
         self.city = self.city.capitalize()
         super(Room, self).save(*args, **kwargs)
+
+    def first_photo(self):
+        photo, = self.photos.all()[:1]
+        return photo.img.url
 
 
 class RoomPhotos(CoreModel.TimeStamps):

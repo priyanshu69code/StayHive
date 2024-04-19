@@ -6,12 +6,16 @@ from django.contrib.auth.admin import UserAdmin
 
 
 class CoustomUserAdmin(UserAdmin):
-    list_display = ("username", "email", "first_name",
-                    "last_name", "superhost", "country")
-    list_filter = ("language", "country", "superhost")
+    list_display = ("username", "avatar", "email", "first_name",
+                    "last_name", "superhost", "country", "email_verified", "email_secret", "login_method")
+
+    list_filter = ("language", "country", "superhost", "login_method")
+
     fieldsets = UserAdmin.fieldsets + (
-        ('Coustom Fields', {'fields': ('gender', 'birthday',
-         "language", "country", "superhost", "bio")}),
+        ('Coustom Fields',
+         {'fields': ('gender', 'birthday',
+                     "language", "country", "superhost", "bio", "login_method", "avatar")}
+         ),
     )
 
 

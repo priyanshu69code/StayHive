@@ -10,6 +10,10 @@ django-seed = "*"
 psycopg2 = "*"
 setuptools = "*"
 django-countries = "*"
+django-dotenv = "*"
+requests = "*"
+django-tailwind = {extras = ["reload"], version = "*"}
+django-4-jet = "*"
 
 [dev-packages]
 

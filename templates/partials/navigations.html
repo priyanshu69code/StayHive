@@ -1,12 +1,14 @@
-<a href="{% url 'core:home' %}">Home</a>
-<ul>
+<ul class="flex items-center text-sm font-medium h-full">
+    <li class="nav_link"><a href="{% url 'core:home' %}">Home</a></li>
     {% if not user.is_authenticated %}
     <!-- These links are shown only if the user is not authenticated -->
-    <li><a href="{% url 'users:login' %}">LogIn</a></li>
-    <li><a href="{% url 'users:signup' %}">SignUp</a></li>
+    <li class="nav_link mr-6"><a href="{% url 'users:login' %}">LogIn</a></li>
+    <li class="nav_link mr-6"><a href="{% url 'users:signup' %}">SignUp</a></li>
     {% else %}
     <!-- This link is shown only if the user is authenticated -->
-    <li><a href="{% url 'users:logout' %}"> LogOut </a></li>
-    <p>Welcome, {{ user.username }}!</p>
+    <li class="nav_link mr-6"><a href="{% url 'users:logout' %}"> LogOut </a></li>
+    <li class="nav_link mr-6"><a href="{{ user.get_absolute_url }}">
+            <p>Welcome, {{ user.username }}!</p>
+        </a></li>
     {% endif %}
 </ul>

@@ -42,7 +42,9 @@ DJANGO_APPS = [
 
 THIRDPARTY_APPS = [
     "django_countries",
-    "django_seed"
+    "django_seed",
+    "tailwind",
+    "django_browser_reload"
 ]
 
 PROJECT_APPS = [
@@ -53,10 +55,18 @@ PROJECT_APPS = [
     "reservations",
     "lists",
     "conversations",
+    "theme"
 ]
 
 
 INSTALLED_APPS = DJANGO_APPS + THIRDPARTY_APPS + PROJECT_APPS
+
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -66,6 +76,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -148,8 +159,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 MEDIA_URL = "/media/"  # We add the "/" at beggening becasue it should be abslute path
 
 # # Email Configrations
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.environ.get("G_EMAIL")
+EMAIL_HOST_PASSWORD = os.environ.get("G_PASSWORD")
+# EMAIL_HOST_PASSWORD = os.environ.get("GOOGLE_PASSWORD")
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
-# EMAIL_HOST = "smtp-relay.brevo.com"
-# EMAIL_PORT = "587"
-# EMAIL_HOST_USER = ""
-# EMAIL_HOST_PASSWORD = ""
+
+# This is login url
+
+LOGIN_URL = "users:login"

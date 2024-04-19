@@ -6,6 +6,7 @@
 
 
 <h2>{{ room.name }}</h2>
+<a href="{{room.host.get_absolute_url}}">{{room.host.first_name}}</a>
 <p>Price: {{ room.price_per_night }}</p>
 <p> Country: {{room.country}}</p>
 <h3>Ammenities:</h3>
