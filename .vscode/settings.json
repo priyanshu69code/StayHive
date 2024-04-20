@@ -13,26 +13,6 @@
             "database": "stayhive",
             "username": "rajpriyanshu"
         }
-    ]
-},
-
-"files.associations": {
-    "**/templates/*.html": "django-html",
-    "**/*.html": "html"
-  },
-
-  "beautify.language": {
-    "html": ["htm", "html", "django-html"]
-  },
-
-  "[django-html]": {
-    "editor.defaultFormatter": "HookyQR.beautify"
-  },
-  "[django-html]": {
-    "editor.defaultFormatter": "HookyQR.beautify",
-    "editor.formatOnSave": true,
-    "editor.tabSize": 2
-  },
-  "emmet.includeLanguages": {
-    "django-html": "html"
-  }
+    ],
+    "html.format.enable": false
+}

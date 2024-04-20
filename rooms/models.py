@@ -71,8 +71,14 @@ class Room(CoreModel.TimeStamps):
         photo, = self.photos.all()[:1]
         return photo.img.url
 
+    def get_next_four_photos(self):
+        photos = self.photos.all()[1:5]
+        return photos
+
 
 class RoomPhotos(CoreModel.TimeStamps):
     img = models.ImageField(upload_to="roomsphotos")
     room = models.ForeignKey(
         Room, related_name='photos', on_delete=models.CASCADE)
+    caption = models.CharField(
+        max_length=255, default="This is a Image of the room", blank=True, null=True)

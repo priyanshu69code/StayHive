@@ -4,6 +4,19 @@ from rooms import views
 app_name = "rooms"
 
 urlpatterns = [
-    path("<int:pk>", views.HomeView.as_view(), name="detail"),
+    path("<int:pk>", views.RoomDetailView.as_view(), name="detail"),
     path("search/", views.RoomSearchView.as_view(), name='search'),
+    path("<int:pk>/edit", views.RoomUpdateView.as_view(), name="edit"),
+    path("<int:pk>/photos/", views.RoomPhotosView.as_view(), name="photos"),
+    path("<int:pk>/photos/adds", views.AddPhotoView.as_view(), name="adds-photo"),
+    path(
+        "<int:room_pk>/photos/<int:photo_pk>/delete/",
+        views.delete_photo,
+        name="delete-photo",
+    ),
+    path(
+        "<int:room_pk>/photos/<int:photo_pk>/edit/",
+        views.EditPhoto.as_view(),
+        name="edit-photo",
+    ),
 ]

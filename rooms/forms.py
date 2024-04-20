@@ -1,6 +1,8 @@
+from typing import Any
 from django import forms
 from django_countries.fields import CountryField
 from . import models
+from django.contrib import messages
 
 
 class RoomsFilter(forms.Form):
@@ -33,3 +35,16 @@ class RoomsFilter(forms.Form):
     ), required=False, widget=forms.CheckboxSelectMultiple)
     amenities = forms.ModelChoiceField(queryset=models.Amenities.objects.all(
     ), required=False, widget=forms.CheckboxSelectMultiple)
+
+
+class CreatePhotoForm(forms.ModelForm):
+    class Meta:
+        model = models.RoomPhotos
+        fields = ("caption", "img")
+
+    def save(self, room_pk, request):
+        room = models.Room.objects.get(pk=room_pk)
+        photos = super().save(commit=False)
+        photos.room = room
+        messages.success(request, "Photo Uploaded Succss Fully")
+        photos.save()
