@@ -7,6 +7,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.urls import reverse
+from core import managers as core_managers
 
 
 class User(AbstractUser):
@@ -40,6 +41,7 @@ class User(AbstractUser):
     email_secret = models.CharField(max_length=20, default="", blank=True)
     login_method = models.CharField(
         max_length=50, choices=LOGIN_CHOICES, default=LOGIN_EMAIL)
+    objects = core_managers.CustomUserManager()
 
     def verify_email(self):
         if self.email_verified is False:

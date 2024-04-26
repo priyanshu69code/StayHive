@@ -5,6 +5,15 @@
     <li class="nav_link mr-6"><a href="{% url 'users:login' %}">LogIn</a></li>
     <li class="nav_link mr-6"><a href="{% url 'users:signup' %}">SignUp</a></li>
     {% else %}
+    {% if request.session.is_hosting %}
+    <!-- This link is shown only if the user is authenticated and hosting -->
+    <li class="nav_link mr-6 text-red-500"><a href="{% url 'rooms:switch-hosting' %}">Stop Hosting</a></li>
+    <li class="nav_link mr-6 text-red-500"><a href="{% url 'rooms:create' %}">Create New Room</a></li>
+    {% else %}
+    <!-- This link is shown only if the user is authenticated and not hosting -->
+    <li class="nav_link mr-6"><a href="{% url 'lists:see-favs' %}">Favourites</a></li>
+    <li class="nav_link mr-6 text-green-500"><a href="{% url 'rooms:switch-hosting' %}">Start Hosting</a></li>
+    {% endif %}
     <!-- This link is shown only if the user is authenticated -->
     <li class="nav_link mr-6"><a href="{% url 'users:logout' %}"> LogOut </a></li>
     <li class="nav_link mr-6"><a href="{{ user.get_absolute_url }}">

@@ -1,4 +1,4 @@
-{% load static tailwind_tags %}
+{% load i18n static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +22,7 @@
       <form action="{% url 'rooms:search' %}" method="get" class="w-9/12">
         <input
           class="search-box border px-5 py-2 rounded-sm border-gray-300 w-9/12 shadow-md hover:shadow-lg text-sm font-medium placeholder:text-gray-600 focus:outline-none"
-          type="text" name="city" placeholder="Search by the City">
+          type="text" name="city" placeholder="{% trans "Search by the City" %}">
       </form>
 
 
@@ -36,5 +36,14 @@
   {% block content %}{% endblock %}
   {% include "partials/footer.html" %}
 </body>
+
+<script>
+  const langSelect = document.getElementById("js-lang");
+  const handleLangChange = () => {
+    const selected = langSelect.value;
+    fetch(`{% url 'users:switch-language' %}?lang=${selected}`).then(() => window.location.reload());
+  }
+  langSelect.addEventListener("change", handleLangChange);
+</script>
 
 </html>

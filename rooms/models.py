@@ -3,6 +3,8 @@ from django_countries.fields import CountryField
 from django.urls import reverse
 import core.models as CoreModel
 from users.models import User as Host
+from cal import Calendar
+from django.utils import timezone
 # Create your models here.
 
 
@@ -26,7 +28,7 @@ class Room(CoreModel.TimeStamps):
     name = models.CharField(max_length=100)
     description = models.TextField()
     # country = models.CharField(max_length=200,  null=True, choices=CountryField(
-    #     # https://stackoverflow.com/questions/77667419/problem-after-upgrading-to-django-5-0-attributeerror-blankchoiceiterator-obj#:~:text=The%20error%20you're%20encountering,parameter%20in%20ChoiceField%20has%20changed.
+    #     # https://stackoverflow.com/questions/77667avatar419/problem-after-upgrading-to-django-5-0-attributeerror-blankchoiceiterator-obj#:~:text=The%20error%20you're%20encountering,parameter%20in%20ChoiceField%20has%20changed.
     # ).choices + [('', 'Select Country')])
     country = CountryField(null=True)
     city = models.CharField(max_length=80)
@@ -68,12 +70,26 @@ class Room(CoreModel.TimeStamps):
         super(Room, self).save(*args, **kwargs)
 
     def first_photo(self):
-        photo, = self.photos.all()[:1]
-        return photo.img.url
+        try:
+            photo, = self.photos.all()[:1]
+            return photo
+        except ValueError:
+            return None
 
     def get_next_four_photos(self):
         photos = self.photos.all()[1:5]
         return photos
+
+    def get_calendars(self):
+        now = timezone.now()
+        this_year = now.year
+        this_month = now.month
+        next_month = this_month + 1
+        if this_month == 12:
+            next_month = 1
+        this_month_cal = Calendar(this_year, this_month)
+        next_month_cal = Calendar(this_year, next_month)
+        return [this_month_cal, next_month_cal]
 
 
 class RoomPhotos(CoreModel.TimeStamps):

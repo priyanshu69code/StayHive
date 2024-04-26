@@ -48,3 +48,46 @@ class CreatePhotoForm(forms.ModelForm):
         photos.room = room
         messages.success(request, "Photo Uploaded Succss Fully")
         photos.save()
+
+
+class CreateRoomForm(forms.ModelForm):
+    class Meta:
+        model = models.Room
+        fields = [
+            "name",
+            "description",
+            "country",
+            "city",
+            "address",
+            "price_per_night",
+            "max_guests",
+            "is_available",
+            "beds",
+            "bedrooms",
+            "baths",
+            "checkin",
+            "checkout",
+            "room_type",
+            "facilities",
+            "amenities",
+            "house_rules"
+        ]
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Room Name'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Description'}),
+            'address': forms.TextInput(attrs={'placeholder': 'Address'}),
+            'price_per_night': forms.NumberInput(attrs={'placeholder': 'Price Per Night'}),
+            'max_guests': forms.NumberInput(attrs={'placeholder': 'Max Guests'}),
+            'beds': forms.NumberInput(attrs={'placeholder': 'Beds'}),
+            'bedrooms': forms.NumberInput(attrs={'placeholder': 'Bed Rooms'}),
+            'baths': forms.NumberInput(attrs={'placeholder': 'Bath Rooms'}),
+            'checkin': forms.TimeInput(attrs={'placeholder': 'Check In Time'}),
+            'checkout': forms.TimeInput(attrs={'placeholder': 'Check Out Time'}),
+        }
+
+    def save(self, user: Any) -> Any:
+        room = super().save(commit=False)
+        room.host = user
+        room.save()
+        self.save_m2m()
+        return room

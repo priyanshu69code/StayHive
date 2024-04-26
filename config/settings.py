@@ -44,6 +44,7 @@ THIRDPARTY_APPS = [
     "django_countries",
     "django_seed",
     "tailwind",
+    "widget_tweaks",
     "django_browser_reload"
 ]
 
@@ -77,6 +78,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -172,3 +174,8 @@ EMAIL_USE_SSL = False
 # This is login url
 
 LOGIN_URL = "users:login"
+
+
+# Local Translation
+
+LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)

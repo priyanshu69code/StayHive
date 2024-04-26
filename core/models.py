@@ -1,4 +1,5 @@
 from django.db import models
+from . import managers
 
 # Create your models here.
 
@@ -7,8 +8,9 @@ class TimeStamps(models.Model):
     """This is Time Stamp Model"""
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    objects = managers.CoustomManager()
 
-    class Meta: 
+    class Meta:
         abstract = True
 
 

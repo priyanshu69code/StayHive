@@ -1,3 +1,6 @@
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.views.generic import DeleteView
+from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
@@ -6,12 +9,13 @@ from .models import Room
 from django.shortcuts import render
 from rooms.models import Room, RoomPhotos
 from django.views.generic import DetailView, UpdateView, FormView
-from .forms import RoomsFilter, CreatePhotoForm
+from .forms import RoomsFilter, CreatePhotoForm, CreateRoomForm
 from rooms import mixin
 from django.http import Http404, HttpResponse
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 
 class RoomDetailView(DetailView):
@@ -148,3 +152,45 @@ class AddPhotoView(LoginRequiredMixin, FormView):
         request = self.request
         form.save(room_pk, request=request)
         return redirect(reverse("rooms:photos", kwargs={"pk": room_pk}))
+
+
+@login_required
+def switch_hosting(request):
+    is_hosting = request.session.get("is_hosting", False)
+    if is_hosting:
+        request.session["is_hosting"] = False
+    else:
+        request.session["is_hosting"] = True
+    return redirect('core:home')
+
+
+class CreateRoomView(LoginRequiredMixin, FormView):
+    template_name = "rooms/room_create.html"
+    form_class = CreateRoomForm
+
+    def form_valid(self, form):
+        room = form.save(self.request.user)
+        messages.success(self.request, 'Add Atleast One Photo')
+
+        return redirect("rooms:photos", pk=room.pk)
+
+
+class RoomDeleteView(UserPassesTestMixin, DeleteView):
+    model = Room
+    template_name = 'rooms/room_confirm_delete.html'
+    # Redirect to the room list page after deletion
+    success_url = reverse_lazy('core:home')
+
+    def test_func(self):
+        room = self.get_object()
+        return self.request.user == room.host
+
+    def handle_no_permission(self):
+        # Redirect to the home page if the user is not the host
+        messages.error(
+            self.request, 'You do not have permission to delete this room')
+        return redirect('home')
+
+    def get_queryset(self):
+        # Ensure that only the host can delete the room
+        return super().get_queryset().filter(host=self.request.user)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from reservations.models import Reservation, Status
+from reservations.models import Reservation, BookedDay
 
 # Register your models here.
 
@@ -11,5 +11,11 @@ class ReservationAdmin(admin.ModelAdmin):
     list_filter = ("status",)
 
 
+class BookedDayAdmin(admin.ModelAdmin):
+    list_display = ('day', 'reservation')
+    search_fields = ("day", "reservation")
+    list_filter = ("day", "reservation")
+
+
 admin.site.register(Reservation, ReservationAdmin)
-admin.site.register(Status)
+admin.site.register(BookedDay, BookedDayAdmin)

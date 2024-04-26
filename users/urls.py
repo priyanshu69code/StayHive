@@ -15,5 +15,6 @@ urlpatterns = [
     path("<int:pk>", views.UserDetailView.as_view(), name="profile"),
     path("update", views.UpdateProfileView.as_view(), name="update"),
     path("update/password", views.UpdatePasswordView.as_view(),
-         name="update-password")
+         name="update-password"),
+    path("switch-language/", views.switch_language, name="switch-language")
 ]

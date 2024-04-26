@@ -16,6 +16,8 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from users import mixin
 from django.contrib.auth.decorators import login_required
+from django.utils import translation
+from django.http import HttpResponse
 # Create your views here.
 
 
@@ -29,6 +31,7 @@ class LoginUserView(mixin.LoggedOutOnlyView, LoginView):
         if next_url is not None:
             return next_url
         else:
+            messages.success(self.request, "Hii! Again")
             return reverse("core:home")
 
 
@@ -172,3 +175,11 @@ class UpdatePasswordView(mixin.EmailLoginOnly, SuccessMessageMixin, PasswordChan
         password_update.fields['new_password1'].widget.attrs['placeholder'] = 'Enter New Password'
         password_update.fields['new_password2'].widget.attrs['placeholder'] = 'Confirm Password'
         return password_update
+
+
+def switch_language(request):
+    lang = request.GET.get("lang", None)
+    print(type(lang))
+    if lang is not None:
+        request.session[translation.LANGUAGE_SESSION_KEY] = lang
+    return HttpResponse(status=200)

@@ -1,27 +1,43 @@
 from django.db import models
-import core.models as core_models
-
-# Create your models here.
+from core import models as core_models
 
 
-class Converstions(core_models.TimeStamps):
+class Conversation(core_models.TimeStamps):
+
+    """ Conversation Model Definition """
+
     participants = models.ManyToManyField(
-        "users.User", related_name="conversations")
+        "users.User", related_name="converstation", blank=True
+    )
 
-    def __str__(self) -> str:
-        username = [user for user in self.participants.all()]
-        return f"Conversation between {', '.join([str(u) for u in username])}"
+    def __str__(self):
+        usernames = []
+        for user in self.participants.all():
+            usernames.append(user.username)
+        return ", ".join(usernames)
 
-    def count_messages(self) -> int:
-        return self.message.count()
+    def count_messages(self):
+        return self.messages.count()
+
+    count_messages.short_description = "Number of Messages"
+
+    def count_participants(self):
+        return self.participants.count()
+
+    count_participants.short_description = "Number of Participants"
 
 
 class Message(core_models.TimeStamps):
-    text = models.TextField()
-    user = models.ForeignKey(
-        "users.User", on_delete=models.SET_NULL, null=True)
-    converstions = models.ForeignKey(
-        Converstions, on_delete=models.CASCADE, related_name="message")
 
-    def __str__(self) -> str:
-        return f"{self.user} says: {self.text[:50]}"
+    """ Message Model Definition """
+
+    message = models.TextField()
+    user = models.ForeignKey(
+        "users.User", related_name="messages", on_delete=models.CASCADE
+    )
+    conversation = models.ForeignKey(
+        "Conversation", related_name="messages", on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return f"{self.user} says: {self.message}"
