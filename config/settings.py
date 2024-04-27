@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import django_heroku
 from pathlib import Path
 import os
 
@@ -180,3 +181,6 @@ LOGIN_URL = "users:login"
 # Local Translation
 
 LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
+
+
+django_heroku.settings(locals())
